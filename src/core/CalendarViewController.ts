@@ -1,6 +1,6 @@
-import {WorkspaceLeaf} from 'obsidian';
+import { WorkspaceLeaf } from 'obsidian';
 import DustCalendarPlugin from "../main";
-import {CalendarView, VIEW_TYPE_CALENDAR} from "../view/CalendarView";
+import { CalendarView, VIEW_TYPE_CALENDAR } from "../view/CalendarView";
 
 
 /**
@@ -46,7 +46,7 @@ export class CalendarViewController {
 
     // 立即刷新
     public forceFlush(): void {
-        const {workspace} = this.plugin.app;
+        const { workspace } = this.plugin.app;
 
         // 检查该类型的视图是否存在，如果不存在，则创建
         let leaf: WorkspaceLeaf | null = null;

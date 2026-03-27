@@ -16,20 +16,18 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
-        node-version: '20'
+        node-version: '24'
         cache: 'npm'
     
     - name: Install dependencies
-      run: npm ci
+      run: npm install
     
     - name: Build plugin
       run: npm run build
     
     - name: Create release package
       run: |
-        mkdir release-files
-        cp dist/main.js manifest.json dist/styles.css release-files/
-        cd release-files
+        cd dist
         zip -r ../obsidian-dust-calendar-${{ github.ref_name }}.zip .
     
     - name: Create GitHub Release
@@ -37,11 +35,6 @@ jobs:
       with:
         files: |
           obsidian-dust-calendar-${{ github.ref_name }}.zip
-          dist/main.js
-          manifest.json
-          dist/styles.css
-        draft: false
         prerelease: false
         generate_release_notes: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}

@@ -169,9 +169,10 @@ function WeekIndexItem({targetDay}: { targetDay: DateTime }) {
     // 点击日期会更新已选中对象
     const onClickCallback = (e: MouseEvent<HTMLDivElement>) => {
         // 如果发生连击，只有第一次点击才会切换选中对象，并且能够避免干扰双击事件
+
         if (e.detail === 1) {
             dispatch(updateSelectedItem(newSelectItem));
-            plugin.noteController.openNoteBySelectedItem(newSelectItem);
+            // plugin.noteController.openNoteBySelectedItem(newSelectItem);
         }
     }
 
@@ -203,9 +204,9 @@ function MonthViewRow({
     let saturday = dayListOfMonthView.getDayByWeek(weekIndex, WeekEnum.SATURDAY);
     let sunday = dayListOfMonthView.getDayByWeek(weekIndex, WeekEnum.SUNDAY);
 
-
+    // 周索引应该引用周日
     return <div className='calendar-view-row'>
-        <WeekIndexItem targetDay={monday}/>
+        <WeekIndexItem targetDay={sunday}/>
         <DayItem targetDay={monday} dayListOfMonthView={dayListOfMonthView}/>
         <DayItem targetDay={tuesday} dayListOfMonthView={dayListOfMonthView}/>
         <DayItem targetDay={wednesday} dayListOfMonthView={dayListOfMonthView}/>

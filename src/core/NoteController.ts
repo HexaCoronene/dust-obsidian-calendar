@@ -121,24 +121,20 @@ export default class NoteController {
     }
 
     public getNotePatternPlaceHolder(noteType: NoteType): string {
-
-        if (noteType === NoteType.DAILY) {
-            return "日记/yyyy-MM-dd";
+        switch (noteType) {
+            case NoteType.DAILY:
+                return "日记/yyyy-MM-dd";
+            case NoteType.WEEKLY:
+                return "周记/yyyy-WW";
+            case NoteType.MONTHLY:
+                return "月度总结/yyyy-MM";
+            case NoteType.QUARTERLY:
+                return "季度总结/yyyy-qq";
+            case NoteType.YEARLY:
+                return "年度总结/yyyy";
+            default:
+                return "";
         }
-        else if (noteType === NoteType.WEEKLY) {
-            return "周记/yyyy-WW";
-        }
-        else if (noteType === NoteType.MONTHLY) {
-            return "月度总结/yyyy-MM";
-        }
-        else if (noteType === NoteType.QUARTERLY) {
-            return "季度总结/yyyy-qq";
-        }
-        else if (noteType === NoteType.YEARLY) {
-            return "年度总结/yyyy";
-        }
-
-        return "";
     }
 
     public hasNote(date: DateTime, noteType: NoteType): boolean {

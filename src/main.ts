@@ -1,14 +1,14 @@
-import {DateTime} from "luxon";
-import {App, Plugin, PluginManifest, WorkspaceLeaf} from 'obsidian';
-import {CalendarView, VIEW_TYPE_CALENDAR} from './view/CalendarView';
+import { DateTime } from "luxon";
+import { App, Plugin, PluginManifest, WorkspaceLeaf } from 'obsidian';
+import { CalendarView, VIEW_TYPE_CALENDAR } from './view/CalendarView';
 import Database from "./core/Database";
 import NoteController from "./core/NoteController";
 import TemplateController from "./core/TemplateController";
 import MainSettingTab from "./view/setting/MainSettingTab";
 import ViewController from "./core/ViewController";
 import NoteStatisticController from "./core/NoteStatisticController";
-import {CalendarViewController} from "./core/CalendarViewController";
-import {NoteType} from "./base/enum";
+import { CalendarViewController } from "./core/CalendarViewController";
+import { NoteType } from "./base/enum";
 
 
 // 插件对象
@@ -63,8 +63,8 @@ export default class DustCalendarPlugin extends Plugin {
             name: "打开/创建每周笔记",
             callback: () => {
                 const now = DateTime.now();
-                const monday = now.minus({day: now.weekday - 1});
-                this.noteController.openNoteByNoteType(DateTime.local(monday.year, monday.month, monday.day), NoteType.WEEKLY);
+                const sunday = now.plus({ day: 7 - now.weekday });
+                this.noteController.openNoteByNoteType(DateTime.local(sunday.year, sunday.month, sunday.day), NoteType.WEEKLY);
             }
         });
         this.addCommand({
@@ -107,7 +107,7 @@ export default class DustCalendarPlugin extends Plugin {
     }
 
     private static async activateCalendarView(plugin: Plugin): Promise<void> {
-        const {workspace} = plugin.app;
+        const { workspace } = plugin.app;
 
         // 检查该类型的视图是否存在，如果不存在，则创建
         let leaf: WorkspaceLeaf | null = null;
@@ -118,7 +118,7 @@ export default class DustCalendarPlugin extends Plugin {
         else {
             leaf = workspace.getRightLeaf(false);
             if (leaf) {
-                await leaf.setViewState({type: VIEW_TYPE_CALENDAR, active: true});
+                await leaf.setViewState({ type: VIEW_TYPE_CALENDAR, active: true });
             } else {
                 throw new Error("无法获取右侧视图叶子");
             }
